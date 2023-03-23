@@ -32,6 +32,7 @@ const categories = {
 type Item = {
   id : number ,
   visibility : boolean,
+  name : string,
 
   
 }
@@ -130,6 +131,7 @@ export const GetSubsets = async (viewer: IfcViewerAPI
         let Item : Item = {
           visibility : true ,
           id : itemid,
+          name : props["Name"].value
          
         }
         Items.push(Item)

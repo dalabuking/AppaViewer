@@ -14,14 +14,18 @@ import {
 export function CategoryTree(
   viewer: IfcViewerAPI,
   subsets: Array<IFCModel.IFCModel>,
-  setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>
+  setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>,
+  setItemProperties: React.Dispatch<React.SetStateAction<Object | null>>,
 ) {
-  const selectComponent = (_event, id) => {
-    viewer.IFC.selector.pickIfcItemsByID(0, [id], true);
+  const  selectComponent  = async (_event, id)  => {
+     await viewer.IFC.selector.pickIfcItemsByID(0, [id], true);
+     const props = await viewer.IFC.getProperties(0, id, false);
+      setItemProperties(props);
+  
   };
-  const  preSelectComponent =  (_event, id ) => {
+  const  preSelectComponent =  async (_event, id ) => {
 
-     viewer.IFC.selector.prepickIfcItemsByID(0, [id]);
+      await viewer.IFC.selector.prepickIfcItemsByID(0, [id]);
   };
   let expandedNodes = [];
   let Categories = [];
@@ -87,23 +91,28 @@ export function CategoryTree(
     const subsetName = subset.userData.name;
     let Items = [];
     for (const item of subset.userData.subSubsets.items) {
-      //let itemName = item.props["Name"].value;
+      let itemName = item.name;
       const ItemId = item.id;
       
    
       Items.push(
-        <Box key={ItemId} sx={boxsx} 
+        <Box    sx = {{border: "1px solid grey"}}  key={ItemId} >
+
+        
+        <Box   sx={boxsx}
         onClick={(event) => selectComponent(event, ItemId)}
         onMouseEnter={(event) => preSelectComponent(event, ItemId)}
         
         >
-          {"itemName" + "-" + ItemId}
-          <Checkbox
-            disabled={!subset.userData.checked}
-            checked={item.visibility}
-            onChange={(event) => setItemVisibility(event, subset, item)}
-          />
+          {itemName + "-" + ItemId}
+       
         </Box>
+           <Checkbox
+           disabled={!subset.userData.checked}
+           checked={item.visibility}
+           onChange={(event) => setItemVisibility(event, subset, item)}
+         />
+         </Box>
       );
     }
     Categories.push(
@@ -145,7 +154,7 @@ export function CategoryTree(
 
 
 const boxsx = {
-    border: "1px solid grey",
+
     '&:hover': {
       backgroundColor: '#ADD8E6',
       borderColor: '#0062cc',

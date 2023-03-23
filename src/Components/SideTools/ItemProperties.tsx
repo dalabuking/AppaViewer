@@ -69,7 +69,7 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
     propList.push(propReact);
   }
 
-  console.log(propList);
+ 
 
   return (
     <TreeView

@@ -11,6 +11,7 @@ type SideToolProps = {
   subsets: Array<any>;
   setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>;
   itemProperties : Object | null;
+  setItemProperties: React.Dispatch<React.SetStateAction<Object | null>>;
   
 };
 
@@ -43,7 +44,7 @@ export function SideTools(props: SideToolProps): React.ReactElement {
       {/* Choose Which three will be shown*/}
       
       {isCategories &&
-        CategoryTree(props.viewer, props.subsets, props.setSubsets)}
+        CategoryTree(props.viewer, props.subsets, props.setSubsets, props.setItemProperties)}
         { props.itemProperties !== null && 
           <ItemProperties 
           properties = {props.itemProperties}

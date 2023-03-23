@@ -108,6 +108,7 @@ function App() {
               subsets={subsets}
               setSubsets={setSubsets}
               itemProperties = {itemProperties}
+              setItemProperties = {setItemProperties}
             />
           )}
         </div>
