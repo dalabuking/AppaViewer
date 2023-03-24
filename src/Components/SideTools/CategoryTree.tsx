@@ -15,7 +15,7 @@ export function CategoryTree(
   viewer: IfcViewerAPI,
   subsets: Array<IFCModel.IFCModel>,
   setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>,
-  setItemProperties: React.Dispatch<React.SetStateAction<Object | null>>,
+  setItemProperties: React.Dispatch<React.SetStateAction<any | null>>,
 ) {
   const  selectComponent  = async (_event, id)  => {
      await viewer.IFC.selector.pickIfcItemsByID(0, [id], true);

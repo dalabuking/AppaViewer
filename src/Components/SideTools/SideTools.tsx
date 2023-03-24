@@ -10,8 +10,8 @@ type SideToolProps = {
   viewer: IfcViewerAPI;
   subsets: Array<any>;
   setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>;
-  itemProperties : Object | null;
-  setItemProperties: React.Dispatch<React.SetStateAction<Object | null>>;
+  itemProperties : any | null;
+  setItemProperties: React.Dispatch<React.SetStateAction<any | null>>;
   
 };
 
@@ -48,6 +48,7 @@ export function SideTools(props: SideToolProps): React.ReactElement {
         { props.itemProperties !== null && 
           <ItemProperties 
           properties = {props.itemProperties}
+          viewer = {props.viewer}
           />
 
         }

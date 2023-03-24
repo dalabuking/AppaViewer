@@ -30,7 +30,7 @@ function App() {
   // right click on item menu
   const [contextMenu, setContextMenu] = useState<ContextMenuType | null>(null);
 // show propeties tree if item is picked
-  const [itemProperties , setItemProperties] = React.useState<Object | null>(null);
+  const [itemProperties , setItemProperties] = React.useState<any | null>(null);
 
 
   const handleContextMenu = (event: React.MouseEvent) => {

@@ -2,23 +2,53 @@ import TreeView from "@mui/lab/TreeView";
 import TextField from "@mui/material/TextField";
 import React from "react";
 
+import Button from "@mui/material/Button"
+import { IfcViewerAPI } from "web-ifc-viewer";
+import 'web-ifc';
+
 type ItemPropertiesProps = {
-  properties: Object;
+  properties: any;
+  viewer: IfcViewerAPI;
 };
 
 export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
   
-  const [itemProps , setItemProps] = React.useState(props.properties);
+  const [itemProps , setItemProps] = React.useState<any>(props.properties);
+  const manager = props.viewer.IFC.loader.ifcManager;
 
-  // const changeProps = (event, key : string) => {
+  const changeProps = async (event, key : string ) => {
 
-  //   setItemProps((prevState)=> {
-     
-  //         prevState[key].value = event.target.value
+    setItemProps((prevState)=> {
+      
+          const newState = Object.assign({}, prevState);
+          
+          try{
+            newState[key].value = event.target.value;
+          }
+          catch{
+            newState[key] = event.target.value;
+          }
+
+
        
-  //      return prevState
-  //   })      
-  //}
+       return newState;
+    })      
+  }
+
+  const handleSubmit = async  (event) => {
+    event.preventDefault();
+    const newData = await manager.getItemProperties(0, itemProps.expressID)
+     const keys = Object.keys(newData)
+     for(const key of keys) {
+      newData[key] = itemProps[key];
+     }
+    
+     await manager.ifcAPI.WriteLine(0, newData);
+
+  }
+
+
+
   let propList = [];
   const keys = Object.keys(props.properties);
  
@@ -43,8 +73,7 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
     }
     } else {
       value = props.properties[key].value;
-      if (key === "GlobalId" || key === "OwnerHistory" || key === "ObjectPlacement"
-      || key === "Representation" ){
+      if (key === "GlobalId" || key === "OwnerHistory" || key === "ObjectPlacement" ){
         disabled = true;
     }
     
@@ -63,7 +92,7 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
         value={value}
         label={key}
         size="small"
-        //onChange={(event) => changeProps(event, key)} 
+        onChange={(event) => changeProps(event, key )} 
       />
     );
     propList.push(propReact);
@@ -72,20 +101,29 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
  
 
   return (
-    <TreeView
-      aria-label="file system navigator"
-      sx={{
-        width: 400,
-        height: 200,
-        flexGrow: 1,
-        maxWidth: 1000,
-        maxHeight: 200,
-        overflowY: "auto",
-        border: "1px solid grey",
-        padding: "7px",
-      }}
+    <form
+      onSubmit={handleSubmit}
     >
+    <TreeView
+          aria-label="file system navigator"
+          sx={{
+            width: 400,
+            height: 200,
+            flexGrow: 1,
+            maxWidth: 1000,
+            maxHeight: 200,
+            overflowY: "auto",
+            border: "1px solid grey",
+            padding: "7px",
+    
+          }}
+          >
       {propList}
-    </TreeView>
+     <Button type = "submit">
+       Apply
+     </Button>
+     </TreeView>
+    </form>
+
   );
 }
