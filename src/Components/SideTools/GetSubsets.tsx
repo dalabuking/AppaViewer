@@ -12,6 +12,8 @@ import {
   IFCPLATE,
   IFCBUILDINGELEMENTPROXY,
   IFCFLOWFITTING,
+  IFCBEAM,
+  IFCROOF
   
 } from "web-ifc";
 
@@ -26,6 +28,8 @@ const categories = {
   IFCMEMBER,
   IFCBUILDINGELEMENTPROXY,
   IFCFLOWFITTING,
+  IFCBEAM,
+  IFCROOF
   
 };
 

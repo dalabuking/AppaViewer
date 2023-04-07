@@ -15,17 +15,15 @@ export function CategoryTree(
   viewer: IfcViewerAPI,
   subsets: Array<IFCModel.IFCModel>,
   setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>,
-  setItemProperties: React.Dispatch<React.SetStateAction<any | null>>,
+  setItemProperties: React.Dispatch<React.SetStateAction<any | null>>
 ) {
-  const  selectComponent  = async (_event, id)  => {
-     await viewer.IFC.selector.pickIfcItemsByID(0, [id], true);
-     const props = await viewer.IFC.getProperties(0, id, false);
-      setItemProperties(props);
-  
+  const selectComponent = async (_event, id) => {
+    await viewer.IFC.selector.pickIfcItemsByID(0, [id], true);
+    const props = await viewer.IFC.getProperties(0, id, false);
+    setItemProperties(props);
   };
-  const  preSelectComponent =  async (_event, id ) => {
-
-      await viewer.IFC.selector.prepickIfcItemsByID(0, [id]);
+  const preSelectComponent = async (_event, id) => {
+    await viewer.IFC.selector.prepickIfcItemsByID(0, [id]);
   };
   let expandedNodes = [];
   let Categories = [];
@@ -50,8 +48,9 @@ export function CategoryTree(
         viewer
       );
       setSubsets(clonedSubsets);
+    
+
     }
-   
   };
 
   const setItemVisibility = (
@@ -69,7 +68,6 @@ export function CategoryTree(
         viewer
       );
       setSubsets(clondedSubsets);
-     
     } else {
       const clondedSubsets = setItemVisibilty(
         subsets,
@@ -79,9 +77,9 @@ export function CategoryTree(
         viewer
       );
       setSubsets(clondedSubsets);
-
+    
+    
     }
-   
   };
 
   let i = 1;
@@ -93,26 +91,22 @@ export function CategoryTree(
     for (const item of subset.userData.subSubsets.items) {
       let itemName = item.name;
       const ItemId = item.id;
-      
-   
-      Items.push(
-        <Box    sx = {{border: "1px solid grey"}}  key={ItemId} >
 
-        
-        <Box   sx={boxsx}
-        onClick={(event) => selectComponent(event, ItemId)}
-        onMouseEnter={(event) => preSelectComponent(event, ItemId)}
-        
-        >
-          {itemName + "-" + ItemId}
-       
+      Items.push(
+        <Box sx={{ border: "1px solid grey" }} key={ItemId}>
+          <Box
+            sx={boxsx}
+            onClick={(event) => selectComponent(event, ItemId)}
+            onMouseEnter={(event) => preSelectComponent(event, ItemId)}
+          >
+            {itemName + "-" + ItemId}
+          </Box>
+          <Checkbox
+            disabled={!subset.userData.checked}
+            checked={item.visibility}
+            onChange={(event) => setItemVisibility(event, subset, item)}
+          />
         </Box>
-           <Checkbox
-           disabled={!subset.userData.checked}
-           checked={item.visibility}
-           onChange={(event) => setItemVisibility(event, subset, item)}
-         />
-         </Box>
       );
     }
     Categories.push(
@@ -133,16 +127,15 @@ export function CategoryTree(
   }
   return (
     <TreeView
- 
       aria-label="file system navigator"
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpandIcon={<ChevronRightIcon />}
       sx={{
         width: 400,
-        height: 300, 
+        height: "40vh",
         flexGrow: 1,
         maxWidth: 400,
-        maxHeight: 400,
+        maxHeight: "40vh",
         overflowY: "auto",
         border: "1px solid grey",
       }}
@@ -152,13 +145,9 @@ export function CategoryTree(
   );
 }
 
-
 const boxsx = {
-
-    '&:hover': {
-      backgroundColor: '#ADD8E6',
-      borderColor: '#0062cc',
-     
-    }
-
-}
+  "&:hover": {
+    backgroundColor: "#ADD8E6",
+    borderColor: "#0062cc",
+  },
+};

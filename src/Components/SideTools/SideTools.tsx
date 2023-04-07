@@ -4,6 +4,7 @@ import { IfcViewerAPI } from "web-ifc-viewer";
 import { CategoryTree } from "./CategoryTree";
 import IFCModel from "web-ifc-three/IFC/components/IFCModel";
 import { ItemProperties } from "./ItemProperties";
+import { Plans } from "./Plans";
 
 type SideToolProps = {
   ifcProject: Object | undefined;
@@ -12,40 +13,46 @@ type SideToolProps = {
   setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>;
   itemProperties : any | null;
   setItemProperties: React.Dispatch<React.SetStateAction<any | null>>;
+
   
 };
 
 export function SideTools(props: SideToolProps): React.ReactElement {
-  //const [isTree, setIsTree] = React.useState(true);
-  
-
+  const [isPlans, setIsPlans] = React.useState(false);
   const [isCategories, setIsCategories] = React.useState(true);
 
-  // const setToTree = (_event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setIsTree(true);
-  //   seIsCategories(false);
-  // };
+  const setToPlans = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    setIsPlans(true);
+    setIsCategories(false);
+   
+  };
  
   const setToCategories = (_event: React.MouseEvent<HTMLButtonElement>) => {
-    //setIsTree(false);
-  
+    setIsPlans(false);
     setIsCategories(true);
   };
 
   return (
     
     <>
-      {/* <TreeButton variant="outlined" onClick={setToTree}>
-        IFC Tree
-      </TreeButton> */}
+      
       <TreeButton variant="outlined" onClick={setToCategories}>
         IFC Categories
+      </TreeButton>
+      <TreeButton variant="outlined" onClick={setToPlans}>
+        IFC Floorplans
       </TreeButton>
       {/* Choose Which three will be shown*/}
       
       {isCategories &&
         CategoryTree(props.viewer, props.subsets, props.setSubsets, props.setItemProperties)}
-        { props.itemProperties !== null && 
+        { isPlans && <Plans   
+            viewer = {props.viewer}
+      
+        
+        />}
+
+        {props.itemProperties !== null && 
           <ItemProperties 
           properties = {props.itemProperties}
           viewer = {props.viewer}

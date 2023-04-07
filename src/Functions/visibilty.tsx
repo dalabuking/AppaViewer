@@ -1,6 +1,6 @@
 import { togglePickable } from "./togglePickable";
 
-export function setItemVisibilty(
+export  function setItemVisibilty(
   subsets,
   category,
   expressID,
@@ -29,13 +29,15 @@ export function setItemVisibilty(
               [expressID],
               clonedSubset.userData.category
             );
-            togglePickable(viewer, clonedSubset, true);
+           
+            togglePickable(viewer, clonedSubset, false);
             
           }
         }
         return;
       });
     }
+    
     return;
   });
 
@@ -61,6 +63,7 @@ export function setCategoryVisibilty(subsets, category, visible, viewer) {
       } else {
         clonedSubset.userData.checked = false;
         togglePickable(viewer, clonedSubset, false);
+   
         clonedSubset.removeFromParent();
         for (const item of clonedSubset.userData.subSubsets.items) {
           item.visibility = false;
@@ -70,7 +73,7 @@ export function setCategoryVisibilty(subsets, category, visible, viewer) {
     }
     return;
   });
-
+ 
   return clonedSubsets;
 }
 

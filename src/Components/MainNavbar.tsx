@@ -5,6 +5,9 @@ import { IfcViewerAPI } from "web-ifc-viewer";
 import React from "react";
 import IFCModel from "web-ifc-three/IFC/components/IFCModel";
 import { GetSubsets } from "./SideTools/GetSubsets";
+import { MeshBasicMaterial , LineBasicMaterial } from "three";
+
+import { toggleAllMeshPickable } from "../Functions/togglePickable";
 
 type MainNavbarProps = {
   viewer: IfcViewerAPI;
@@ -12,6 +15,9 @@ type MainNavbarProps = {
   setIfcProject: React.Dispatch<React.SetStateAction<Object>>;
   setisLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>;
+  setMeasuring:  React.Dispatch<React.SetStateAction<Boolean>>;
+  subsets : Array<IFCModel.IFCModel>;
+ 
 };
 
 export function MainNavbar(props: MainNavbarProps): ReactElement {
@@ -33,39 +39,85 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
     link.click();
     link.remove();
   }
+
+  const measure = () => {
+    //toogle picable items
+    
+    toggleAllMeshPickable(false , props.viewer)
+
+    props.viewer.dimensions.active = true;
+    props.viewer.dimensions.previewActive = true;
+
+    props.setMeasuring(true);
+    
+  
+ 
+    window.onkeydown = (event) => {
+      if(event.code === 'Escape') {
+        props.viewer.dimensions.active = false;
+        props.viewer.dimensions.previewActive = false;
+        props.viewer.dimensions.deleteAll();
+        props.setMeasuring(false);
+        toggleAllMeshPickable(true , props.viewer)
+      }
+      else if (event.code === 'Delete'){
+        props.viewer.dimensions.delete();
+      }
+    }
+
+
+  }
+
+
   
   const handleLoadFile = async (e: ChangeEvent<HTMLInputElement>) => {
     props.setisLoading(true);
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
     const model: IFCModel.IFCModel = await props.viewer.IFC.loadIfc(file);
-    model.removeFromParent();
+  
     setLoaded(true);
 
+    model.removeFromParent();
     const pickable = props.viewer.context.items.pickableIfcModels;
     const index = pickable.indexOf(model);
     pickable.splice(index, 1);
 
-    props.setModel(model);
 
     //await props.viewer.shadowDropper.renderShadow(model.modelID);
 
     const ifcProject = await props.viewer.IFC.getSpatialStructure(
       model.modelID
     );
-
+    // seting ifc project //spatial tree structure
     props.setIfcProject(ifcProject);
-
+    // get all subset , category subsets
+    
     const subsets = await GetSubsets(props.viewer, ifcProject);
     props.setSubsets(subsets);
 
-    props.viewer.context.renderer.postProduction.active = true;
+    //generate plans 
+    await props.viewer.plans.computeAllPlanViews(model.modelID);
+    const lineMaterial = new LineBasicMaterial({ color: 'black' });
+    const baseMaterial = new MeshBasicMaterial({
+      polygonOffset: true,
+      polygonOffsetFactor: 1, // positive value pushes polygon further away
+      polygonOffsetUnits: 1,
+    });
+    props.viewer.edges.create('plansedges', model.modelID, lineMaterial, baseMaterial);
+
+    props.viewer.edges.toggle('plansedges', false);
+    
     props.setisLoading(false);
+
+    
+
+   
   };
 
   return (
-    <AppBar position="static">
-      <Toolbar>
+    <AppBar position="static" sx={{ height: "10vh"}} >
+      <Toolbar  >
         <label
           className="buttonnav"
           style={{
@@ -82,6 +134,7 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
           Load Model
         </label>
         {loaded && <Button sx={{ color: "white" }} onClick = {saveFile}>Save IFC</Button>}
+       {loaded && <Button sx={{ color: "white" }} onClick = {measure}>Measure</Button>}
       </Toolbar>
     </AppBar>
   );

@@ -58,24 +58,24 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
 
     if (props.properties[key] === null) {
       value = "null";
-      if (key !== "Description"){
-        disabled = true;
-      }
+      // if (key !== "Description"){
+      //   disabled = true;
+      // }
     } else if (props.properties[key] === undefined) {
       value = "undefined";
      
       disabled = true;
     } else if (props.properties[key].value === undefined) {
       value = props.properties[key];
-      if (key === "expressID" ||  key === "type" || key === "ObjectPlacement"
-      || key === "PredefinedType"){
-        disabled = true;
-    }
+    //   if (key === "expressID" ||  key === "type" || key === "ObjectPlacement"
+    //   || key === "PredefinedType"){
+    //     disabled = true;
+    // }
     } else {
       value = props.properties[key].value;
-      if (key === "GlobalId" || key === "OwnerHistory" || key === "ObjectPlacement" ){
-        disabled = true;
-    }
+    //   if (key === "GlobalId" || key === "OwnerHistory" || key === "ObjectPlacement" ){
+    //     disabled = true;
+    // }
     
     }
 
@@ -108,10 +108,10 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
           aria-label="file system navigator"
           sx={{
             width: 400,
-            height: 200,
+            height: "42vh",
             flexGrow: 1,
             maxWidth: 1000,
-            maxHeight: 200,
+            maxHeight: "42vh",
             overflowY: "auto",
             border: "1px solid grey",
             padding: "7px",
