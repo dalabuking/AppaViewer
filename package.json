@@ -29,6 +29,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -53,6 +55,7 @@
   },
   "devDependencies": {
     "@types/material-ui": "^0.21.12",
-    "@types/three": "^0.135.0"
+    "@types/three": "^0.135.0",
+    "gh-pages": "^5.0.0"
   }
 }
