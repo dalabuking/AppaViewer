@@ -84,8 +84,9 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
       <TextField
       disabled = {disabled}
         sx={{
-          padding: "7px",
-          width: 350,
+         padding: "5px",
+         width: "23vw",
+          marginTop : "10px"
         }}
         key={key}
         id={String(value)}
@@ -107,21 +108,43 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
     <TreeView
           aria-label="file system navigator"
           sx={{
-            width: 400,
+            width: "25vw",
             height: "42vh",
             flexGrow: 1,
-            maxWidth: 1000,
+            maxWidth: "25vw",
             maxHeight: "42vh",
             overflowY: "auto",
             border: "1px solid grey",
-            padding: "7px",
+            borderTop : "20px  solid grey",
+            
+            //border: "1px solid grey",
+            //padding: "7px",
     
           }}
           >
+            <div style={{padding : "10px" ,
+             fontSize : 25, 
+             borderBottom : "1px solid grey" , 
+             }}>
+            Properties
+            </div>
+     
       {propList}
-     <Button type = "submit">
+      <div style={{ textAlign : "right"}}>
+      <Button type = "submit"   sx = {
+        {color : "#736F71",
+        padding: '2px 20px',
+        fontSize : 20,
+        border: '1px solid',
+        marginTop : "10px",
+        marginBottom : "10px",
+        marginRight : "1vw"
+        
+        }}>
        Apply
      </Button>
+      </div>
+
      </TreeView>
     </form>
 

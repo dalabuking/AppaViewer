@@ -13,7 +13,7 @@ import {
   IFCBUILDINGELEMENTPROXY,
   IFCFLOWFITTING,
   IFCBEAM,
-  IFCROOF
+  
   
 } from "web-ifc";
 
@@ -29,7 +29,7 @@ const categories = {
   IFCBUILDINGELEMENTPROXY,
   IFCFLOWFITTING,
   IFCBEAM,
-  IFCROOF
+  
   
 };
 

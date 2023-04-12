@@ -11,6 +11,7 @@ export const TreeButton = styled(Button)({
   border: '1px solid',
   lineHeight: 1.5,
   height : "5vh",
+  color : "#736F71",
 
 
   fontFamily: [
@@ -26,17 +27,17 @@ export const TreeButton = styled(Button)({
     '"Segoe UI Symbol"',
   ].join(','),
   '&:hover': {
-    backgroundColor: '#ADD8E6',
-    borderColor: '#0062cc',
+    backgroundColor: '#b2cbd6',
+    borderColor: "#736F71",
    
   },
   '&:active': {
 
-    //backgroundColor: '#ADD8E6'
+    backgroundColor: '#b2cbd6'
     
   },
   '&:focus': {
    
-    //backgroundColor: '#ADD8E6'
+    backgroundColor: '#b2cbd6'
   },
 });

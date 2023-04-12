@@ -102,7 +102,7 @@ function App() {
             position: "fixed",
           }}
         >
-          {ifcProject !== undefined && (
+          {ifcProject !== undefined && !measuring &&  (
             <SideTools
               ifcProject={ifcProject!}
               viewer={viewer!}
