@@ -117,9 +117,6 @@ export function ItemProperties(props: ItemPropertiesProps): React.ReactElement {
             border: "1px solid grey",
             borderTop : "20px  solid grey",
             
-            //border: "1px solid grey",
-            //padding: "7px",
-    
           }}
           >
             <div style={{padding : "10px" ,

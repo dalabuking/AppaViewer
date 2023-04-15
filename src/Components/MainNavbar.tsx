@@ -147,7 +147,9 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
               <div style={{textAlign : "center"}}>
                 <div>Measure</div>
                 <div>Double Click To Measure</div>
+                <div>Delete Dimension With "Delete Button" Hovering On Dimension</div>
                 <div>Turn Off With ESC Button</div>
+            
               </div>
             }
           >
