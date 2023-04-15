@@ -103,7 +103,7 @@ export function CategoryTree(
           Item Visibility
           <Checkbox
             color="default"
-            disabled={!subset.userData.checked}
+            //disabled={!subset.userData.checked}
             checked={item.visibility}
             onChange={(event) => setItemVisibility(event, subset, item)}
           />

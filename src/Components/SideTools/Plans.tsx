@@ -11,11 +11,14 @@ export function Plans(props: PlansProps) {
   const allPlans = props.viewer.plans.getAll(0);
   const ListOfPlans = props.viewer.plans.planLists[0];
 
-  console.log(ListOfPlans);
+
 
   const goToPlanView = (event, plan) => {
     props.viewer.plans.goTo(0, plan);
     props.viewer.edges.toggle("plansedges", true);
+    console.log(ListOfPlans[plan])
+    console.log(ListOfPlans)
+    
   };
   const goToModelView = (event) => {
     props.viewer.plans.exitPlanView();

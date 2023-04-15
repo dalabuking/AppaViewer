@@ -11,8 +11,7 @@ import { MeshBasicMaterial, LineBasicMaterial } from "three";
 import { Save, UploadFile, Expand } from "@mui/icons-material";
 import { toggleAllMeshPickable } from "../Functions/togglePickable";
 import { Vector3 } from "three";
-import uploadLOGO from "../icons/upload.jpg";
-import { width } from "@mui/system";
+
 
 interface geometryValues {
   radius : number, 
@@ -102,22 +101,8 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
 
     //generate plans
     await props.viewer.plans.computeAllPlanViews(model.modelID);
-    const lineMaterial = new LineBasicMaterial({ color: "black" });
-    const baseMaterial = new MeshBasicMaterial({
-      polygonOffset: true,
-      polygonOffsetFactor: 1, // positive value pushes polygon further away
-      polygonOffsetUnits: 1,
-    });
-    props.viewer.edges.create(
-      "plansedges",
-      model.modelID,
-      lineMaterial,
-      baseMaterial
-    );
 
-    props.viewer.edges.toggle("plansedges", false);
-
-
+    
 
     props.setisLoading(false);
     props.setModel(model);
