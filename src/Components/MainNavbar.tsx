@@ -10,13 +10,20 @@ import { GetSubsets } from "./SideTools/GetSubsets";
 import { MeshBasicMaterial, LineBasicMaterial } from "three";
 import { Save, UploadFile, Expand } from "@mui/icons-material";
 import { toggleAllMeshPickable } from "../Functions/togglePickable";
-
+import { Vector3 } from "three";
 import uploadLOGO from "../icons/upload.jpg";
 import { width } from "@mui/system";
+
+interface geometryValues {
+  radius : number, 
+  center : Vector3 ,
+}
+
 
 type MainNavbarProps = {
   viewer: IfcViewerAPI;
   setModel: React.Dispatch<React.SetStateAction<IFCModel.IFCModel>>;
+  setGeometryValues: React.Dispatch<React.SetStateAction<geometryValues>>;
   setIfcProject: React.Dispatch<React.SetStateAction<Object>>;
   setisLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>;
@@ -69,10 +76,14 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
     const model: IFCModel.IFCModel = await props.viewer.IFC.loadIfc(file);
-
+     
     setLoaded(true);
 
+   const modelGeometry : any= await getGemoetryValues( model);
+   props.setGeometryValues(modelGeometry);
+
     model.removeFromParent();
+   
     const pickable = props.viewer.context.items.pickableIfcModels;
     const index = pickable.indexOf(model);
     pickable.splice(index, 1);
@@ -106,7 +117,10 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
 
     props.viewer.edges.toggle("plansedges", false);
 
+
+
     props.setisLoading(false);
+    props.setModel(model);
   };
 
   return (
@@ -166,4 +180,19 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
       </Toolbar>
     </AppBar>
   );
+}
+
+
+
+async function getGemoetryValues(model  : any){
+  let modelGeometry : geometryValues ; 
+  if ( model.geometry.boundingSphere != null ) {
+      modelGeometry = {
+      radius :   model.geometry.boundingSphere.radius,
+      center :  model.geometry.boundingSphere.center
+   }
+  }
+  return modelGeometry
+
+
 }

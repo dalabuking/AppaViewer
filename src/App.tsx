@@ -8,7 +8,8 @@ import SideTools from "./Components/SideTools/SideTools";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import IFCModel from "web-ifc-three/IFC/components/IFCModel";
 import ContextMenu from "./ContextMenu/ContextMenu";
-
+import ViewCubeContainer from "./Components/ViewCube/ViewCubeContainer";
+import { Vector3 } from "three";
 import selectionManager from "./Functions/selection";
 
 interface ContextMenuType {
@@ -16,6 +17,11 @@ interface ContextMenuType {
   mouseY: number;
   item: Intersection.Intersection<Intersection.Object3D<Intersection.Event>>;
   expressID: number;
+}
+
+interface geometryValues {
+  radius : number, 
+  center : Vector3 ,
 }
 
 function App() {
@@ -31,6 +37,8 @@ function App() {
   const [itemProperties, setItemProperties] = React.useState<any | null>(null);
   // is measuring tool on ?
   const [measuring, setMeasuring] = React.useState<Boolean>(false);
+  // geometry 
+  const [geometryValues , setGeometryValues] = React.useState<geometryValues>();
 
   const handleContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -70,6 +78,7 @@ function App() {
       <MainNavbar
         viewer={viewer!}
         setModel={setModel}
+        setGeometryValues={setGeometryValues}
         setIfcProject={setIfcProject}
         setisLoading={setisLoading}
         setSubsets={setSubsets}
@@ -96,6 +105,8 @@ function App() {
             viewer={viewer}
           />
         )}
+    
+
         {isLoading && CircularProgressWithContent()}
         <div
           style={{
@@ -113,6 +124,10 @@ function App() {
             />
           )}
         </div>
+
+        {  model && 
+        <ViewCubeContainer viewer = {viewer} geometryValues = {geometryValues}/>
+      }
       </div>
     </>
   );
