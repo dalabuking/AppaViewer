@@ -49,25 +49,18 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
 
   const measure = () => {
     //toogle picable items
-
+    props.viewer.IFC.selector.unpickIfcItems();
+    props.viewer.IFC.selector.unPrepickIfcItems();
     toggleAllMeshPickable(false, props.viewer);
 
     props.viewer.dimensions.active = true;
     props.viewer.dimensions.previewActive = true;
+   
+    
 
     props.setMeasuring(true);
 
-    window.onkeydown = (event) => {
-      if (event.code === "Escape") {
-        props.viewer.dimensions.active = false;
-        props.viewer.dimensions.previewActive = false;
-        props.viewer.dimensions.deleteAll();
-        props.setMeasuring(false);
-        toggleAllMeshPickable(true, props.viewer);
-      } else if (event.code === "Delete") {
-        props.viewer.dimensions.delete();
-      }
-    };
+ 
   };
 
   const handleLoadFile = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -102,8 +95,29 @@ export function MainNavbar(props: MainNavbarProps): ReactElement {
     //generate plans
     await props.viewer.plans.computeAllPlanViews(model.modelID);
 
-    
 
+
+
+    window.onkeydown = (event) => {
+
+      if (event.code === "Escape") {
+        props.viewer.dimensions.active = false;
+        props.viewer.dimensions.previewActive = false;
+        props.viewer.dimensions.deleteAll();
+        props.setMeasuring(false);
+        toggleAllMeshPickable(true, props.viewer);
+
+      } else if (event.code === "Delete") {
+        props.viewer.dimensions.delete();
+      }
+      else if (event.code === "KeyM" ) {
+        
+        measure();
+       }
+    };
+
+
+ 
     props.setisLoading(false);
     props.setModel(model);
   };

@@ -21,6 +21,9 @@ function selectionManager(viewer: IfcViewerAPI,
       }
     }
     else {
+     
+
+ 
       viewer.dimensions.create();
     }
    
