@@ -39,6 +39,8 @@ function App() {
   const [measuring, setMeasuring] = React.useState<Boolean>(false);
   // geometry 
   const [geometryValues , setGeometryValues] = React.useState<geometryValues>();
+  // set is 2d view
+  
 
   const handleContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
