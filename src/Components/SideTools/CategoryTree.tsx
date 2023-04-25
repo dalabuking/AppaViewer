@@ -3,11 +3,7 @@ import TreeItem from "@mui/lab/TreeItem";
 import { IfcViewerAPI } from "web-ifc-viewer";
 import { Box } from "@mui/material";
 import TreeView from "@mui/lab/TreeView";
-import ExpandMoreIcon from "@mui/material/SvgIcon";
-import ChevronRightIcon from "@mui/material/SvgIcon";
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-//import ChevronRightIcon from "@mui/icons-material";
-//import { ChevronRightIcon } from '@mui/material';
 import IFCModel from "web-ifc-three/IFC/components/IFCModel";
 import {
   setItemVisibilty,
