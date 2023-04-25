@@ -40,7 +40,7 @@ function App() {
   // geometry 
   const [geometryValues , setGeometryValues] = React.useState<geometryValues>();
   // set is 2d view
-  
+  const [is2DView, setIs2DView] = React.useState<Boolean>(false);
 
   const handleContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
