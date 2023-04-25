@@ -13,8 +13,6 @@ type SideToolProps = {
   setSubsets: React.Dispatch<React.SetStateAction<Array<IFCModel.IFCModel>>>;
   itemProperties : any | null;
   setItemProperties: React.Dispatch<React.SetStateAction<any | null>>;
-
-  
 };
 
 export function SideTools(props: SideToolProps): React.ReactElement {
