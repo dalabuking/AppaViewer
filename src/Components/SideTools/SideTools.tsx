@@ -56,6 +56,7 @@ export function SideTools(props: SideToolProps): React.ReactElement {
           <ItemProperties 
           properties = {props.itemProperties}
           viewer = {props.viewer}
+          setItemProperties = {props.setItemProperties}
           />
 
         }

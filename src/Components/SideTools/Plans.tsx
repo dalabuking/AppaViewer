@@ -16,8 +16,7 @@ export function Plans(props: PlansProps) {
   const goToPlanView = (event, plan) => {
     props.viewer.plans.goTo(0, plan);
     props.viewer.edges.toggle("plansedges", true);
-    console.log(ListOfPlans[plan])
-    console.log(ListOfPlans)
+   
     
   };
   const goToModelView = (event) => {
